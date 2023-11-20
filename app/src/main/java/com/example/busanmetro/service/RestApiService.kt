@@ -1,5 +1,7 @@
 package com.example.busanmetro.service
 
+import com.example.busanmetro.data.ConResponse
+import com.example.busanmetro.data.PublicResponse
 import com.example.busanmetro.data.StationResponse
 import com.example.busanmetro.data.TimeResponse
 import com.google.gson.GsonBuilder
@@ -38,6 +40,20 @@ interface RestApiService {
         @Query("act") type: String,
         @Query("scode") code: Int,
     ) : Response<StationResponse>
+
+    @GET("open_api_public.tnn")
+    suspend fun getPublicInfo(
+        @Query("serviceKey") serviceKey: String,
+        @Query("act") type: String,
+        @Query("scode") code: Int,
+    ) : Response<PublicResponse>
+
+    @GET("open_api_convenience.tnn")
+    suspend fun getConvenienceInfo(
+        @Query("serviceKey") serviceKey: String,
+        @Query("act") type: String,
+        @Query("scode") code: Int,
+    ) : Response<ConResponse>
 }
 
 object RestApiServiceGenerator {

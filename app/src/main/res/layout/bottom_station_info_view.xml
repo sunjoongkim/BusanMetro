@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -13,11 +13,37 @@
         android:textSize="16sp"
         android:text="2호선 양산역" />
 
+
+    <TextView
+        android:id="@+id/btn_public"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/text_name"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="공공 시설물 정보"
+        android:background="@drawable/round_button"/>
+
+    <TextView
+        android:id="@+id/btn_convenience"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/text_name"
+        android:layout_toRightOf="@+id/btn_public"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="장애인 편의시설 정보"
+        android:background="@drawable/round_button"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/text_name"
+        android:layout_below="@+id/btn_public"
         android:orientation="horizontal">
 
         <RelativeLayout

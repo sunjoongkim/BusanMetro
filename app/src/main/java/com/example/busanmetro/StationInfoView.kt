@@ -1,5 +1,6 @@
 package com.example.busanmetro
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,8 @@ import java.time.temporal.ChronoUnit
 class StationInfoView : BottomSheetDialogFragment() {
 
     var name: String = ""
-    var line: String = ""
+    var scode: Int = 101
+    var nameMap: HashMap<Int, String>? = null
 
     var itemsUp: List<TimeItem>? = null
     var itemsDown: List<TimeItem>? = null
@@ -36,6 +38,21 @@ class StationInfoView : BottomSheetDialogFragment() {
         val textUp2: TextView = view.findViewById(R.id.text_up_2)
         val textDown1: TextView = view.findViewById(R.id.text_down_1)
         val textDown2: TextView = view.findViewById(R.id.text_down_2)
+
+        val btnPublic: TextView = view.findViewById(R.id.btn_public)
+        val btnConvenience: TextView = view.findViewById(R.id.btn_convenience)
+
+
+        btnPublic.setOnClickListener {
+            val intent = Intent(context, PublicActivity::class.java)
+            intent.putExtra("scode", scode)
+            context?.startActivity(intent)
+        }
+
+        btnConvenience.setOnClickListener {
+            val intent = Intent(context, ConvenienceActivity::class.java)
+            context?.startActivity(intent)
+        }
 
         var upCnt = 0
         var downCnt = 0

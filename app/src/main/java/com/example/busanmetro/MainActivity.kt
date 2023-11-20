@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private var stationMap = HashMap<View, Int>()
+    private var nameMap = HashMap<Int, String>()
 
     private val restApiService = RestApiService.instance
 
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding.layoutLine6.visibility = View.VISIBLE
 
         initStationMap()
+        initNameMap()
         addClickListener()
     }
 
@@ -80,7 +82,8 @@ class MainActivity : AppCompatActivity() {
         // stationMap 맵에서 선택한 ImageView에 해당되는 역 코드를 가져옴
         val station = stationMap.get(view)
 
-        var name = ""
+        // 역 코드에서 역 이름 가져옴
+        var name = nameMap.get(station)
 
         // 클릭시 빨간색 표시 처리
         if (selectedStation != null) {
@@ -100,21 +103,6 @@ class MainActivity : AppCompatActivity() {
         Log.e("@@@@@", "=======> time $time")
 
         CoroutineScope(Dispatchers.IO).launch {
-            // 역 정보
-            val stationResponse = restApiService.getStationInfo(RestApiService.serviceKey, "json", station!!)
-            withContext(Dispatchers.Main) {
-                if (stationResponse.isSuccessful) {
-                    val body = stationResponse.body()
-                    Log.e("@@@@@", "=====> stationResponse body : $body")
-                    val item = body?.response?.body?.item
-
-                    name = item?.name ?: "정보없음"
-                } else {
-                    Log.e("@@@@@", "=====> FAIL!!")
-                }
-            }
-
-
 
             // 상행선 열차 2개
             val upResponse = restApiService.getTimeInfo(RestApiService.serviceKey, "json", station!!, day, time, 0, 2)
@@ -144,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            showStationInfo(name)
+            showStationInfo(name!!, station)
         }
 
     }
@@ -166,9 +154,11 @@ class MainActivity : AppCompatActivity() {
         return Pair(time, day)
     }
 
-    private fun showStationInfo(name: String) {
+    private fun showStationInfo(name: String, scode: Int) {
         val stationInfoView = StationInfoView()
         stationInfoView.name = name
+        stationInfoView.scode = scode
+        stationInfoView.nameMap = nameMap
         stationInfoView.itemsUp = itemsUp
         stationInfoView.itemsDown = itemsDown
         stationInfoView.show(supportFragmentManager, stationInfoView.tag)
@@ -291,5 +281,123 @@ class MainActivity : AppCompatActivity() {
         stationMap.put(binding.btn411, 404)
         stationMap.put(binding.btn412, 403)
 
+    }
+    
+    private fun initNameMap() {
+
+        nameMap.put(95,	"다대포해수욕장")
+        nameMap.put(96,	"다대포항")
+        nameMap.put(97,	"낫개")
+        nameMap.put(98,	"신장림")
+        nameMap.put(99,	"장림")
+        nameMap.put(100, "동매")
+        nameMap.put(101, "신평")
+        nameMap.put(102, "하단")
+        nameMap.put(103, "당리")
+        nameMap.put(104, "사하")
+        nameMap.put(105, "괴정")
+        nameMap.put(106, "대티")
+        nameMap.put(107, "서대신")
+        nameMap.put(108, "동대신")
+        nameMap.put(109, "토성")
+        nameMap.put(110, "자갈치")
+        nameMap.put(111, "남포")
+        nameMap.put(112, "중앙")
+        nameMap.put(113, "부산")
+        nameMap.put(114, "초량")
+        nameMap.put(115, "부산진")
+        nameMap.put(116, "좌천")
+        nameMap.put(117, "범일")
+        nameMap.put(118, "범내골")
+        nameMap.put(119, "서면(1)")
+        nameMap.put(120, "부전")
+        nameMap.put(121, "양정")
+        nameMap.put(122, "시청")
+        nameMap.put(123, "연산(1)")
+        nameMap.put(124, "교대")
+        nameMap.put(125, "동래(1)")
+        nameMap.put(126, "명륜")
+        nameMap.put(127, "온천장")
+        nameMap.put(128, "부산대")
+        nameMap.put(129, "장전")
+        nameMap.put(130, "구서")
+        nameMap.put(131, "두실")
+        nameMap.put(132, "남산")
+        nameMap.put(133, "범어사")
+        nameMap.put(134, "노포")
+        nameMap.put(201, "장산")
+        nameMap.put(202, "중동")
+        nameMap.put(203, "해운대")
+        nameMap.put(204, "동백")
+        nameMap.put(205, "벡스코(시립미술관)")
+        nameMap.put(206, "센텀시티")
+        nameMap.put(207, "민락")
+        nameMap.put(208, "수영(2)")
+        nameMap.put(209, "광안")
+        nameMap.put(210, "금련산")
+        nameMap.put(211, "남천")
+        nameMap.put(212, "경성대.부경대")
+        nameMap.put(213, "대연")
+        nameMap.put(214, "못골")
+        nameMap.put(215, "지게골")
+        nameMap.put(216, "문현")
+        nameMap.put(217, "국제금융센터·부산은행")
+        nameMap.put(218, "전포")
+        nameMap.put(219, "서면(2)")
+        nameMap.put(220, "부암")
+        nameMap.put(221, "가야")
+        nameMap.put(222, "동의대")
+        nameMap.put(223, "개금")
+        nameMap.put(224, "냉정")
+        nameMap.put(225, "주례")
+        nameMap.put(226, "감전")
+        nameMap.put(227, "사상(2)")
+        nameMap.put(228, "덕포")
+        nameMap.put(229, "모덕")
+        nameMap.put(230, "모라")
+        nameMap.put(231, "구남")
+        nameMap.put(232, "구명")
+        nameMap.put(233, "덕천(2)")
+        nameMap.put(234, "수정")
+        nameMap.put(235, "화명")
+        nameMap.put(236, "율리")
+        nameMap.put(237, "동원")
+        nameMap.put(238, "금곡")
+        nameMap.put(239, "호포")
+        nameMap.put(240, "증산")
+        nameMap.put(241, "부산대양산캠퍼스")
+        nameMap.put(242, "남양산")
+        nameMap.put(243, "양산")
+        nameMap.put(301, "수영(3)")
+        nameMap.put(302, "망미")
+        nameMap.put(303, "배산")
+        nameMap.put(304, "물만골")
+        nameMap.put(305, "연산(3)")
+        nameMap.put(306, "거제")
+        nameMap.put(307, "종합운동장")
+        nameMap.put(308, "사직")
+        nameMap.put(309, "미남(3)")
+        nameMap.put(310, "만덕")
+        nameMap.put(311, "남산정")
+        nameMap.put(312, "숙등")
+        nameMap.put(313, "덕천(3)")
+        nameMap.put(314, "구포")
+        nameMap.put(315, "강서구청")
+        nameMap.put(316, "체육공원")
+        nameMap.put(317, "대저")
+        nameMap.put(401, "미남(4)")
+        nameMap.put(402, "동래(4)")
+        nameMap.put(403, "수안")
+        nameMap.put(404, "낙민")
+        nameMap.put(405, "충렬사")
+        nameMap.put(406, "명장")
+        nameMap.put(407, "서동")
+        nameMap.put(408, "금사")
+        nameMap.put(409, "반여농산물시장")
+        nameMap.put(410, "석대")
+        nameMap.put(411, "영산대")
+        nameMap.put(412, "동부산대학")
+        nameMap.put(413, "고촌")
+        nameMap.put(414, "안평")
     }
 }
